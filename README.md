@@ -10,7 +10,7 @@ get my stuff up and running using Udo Munk's [z80pack](https://github.com/udo-mu
 What I wanted to achive, is a client-server simulation,
 with one MP/M server, and four CP/NET clients as depicted here:
 
-![Simulation Setup](docs/simulation_setup.png)
+![Simulation Setup](doc/simulation_setup.png)
 
 Building this was not as straight forward with `z80pack` and `cpmsim`,
 as it needs some alterations, furtherly explained below.
@@ -58,11 +58,11 @@ It's as simple as this, run the command from the `/z80pack/cpmsim` directory:
 
 This will give you something like this:
 
-![Simulation Startup](docs/simulation_startup.png)
+![Simulation Startup](doc/simulation_startup.png)
 
 And eventually you'll end up here:
 
-![Simulation](docs/mpm_server_ready.png)
+![Simulation](doc/mpm_server_ready.png)
 
 
 # How it works
@@ -103,7 +103,7 @@ For that, the `NETWRKIF.ASM` file was patched to refer to the serial interfaces
 Furtherly, `SYSGEN` was used to recompile the kernel, effectively reducing the TMPs (Terminal Message Processors)
 from original 3 down to 1.
 
-References will be provided in the [MPM patches](patches/mpm) directories.
+References are provided in the [MP/M patches](patches/mpm) directory.
 
 
 As for the 4 CP/M + CP/NET disk images, these include changes in the `SNIOS.ASM` file,
@@ -111,6 +111,8 @@ essentially changing the network requestor ID to a unique value.
 
 Without that, all simulations would run with the default ID of 11h, which would break
 functions like CP/NET mail, which rely on having unique requestor IDs.
+
+References are provided in the [CP/NET patches](patches/cpnet) directory.
 
 
 # References
