@@ -1,0 +1,129 @@
+#!/bin/sh
+
+CONF_DIR=./conf
+DISK_DIR=./disks
+# NOTE: MAX_CLIENTS can't be more than 4!
+MAX_CLIENTS=4
+
+
+# sanitize
+#
+echo $MAX_CLIENTS | grep -e '^[1-4]$' > /dev/null
+[ "$?" != "0" ] && { echo "Wrong value: MAX_CLIENTS=$MAX_CLIENTS. Must be numeric and between 1 and 4"; exit; }
+
+which tmux > /dev/null
+[ "$?" != "0" ] && { echo "tmux not found. This script requires tmux to run"; exit; }
+
+[ ! -x ./cpmsim ] && { echo "cpmsim not found. This script is intended to run from within the 'z80pack/cpmsim' directory!"; exit; }
+
+start_server() {
+	# remove our files on TERM and EXIT signals
+	trap 'echo cleanup up ...; rm -rvf ${DISK_DIR}/mpmserver ; rm ${CONF_DIR}/net_server.conf; exit' TERM EXIT
+
+	while [ : ]; do
+		# cleanup vm path
+		[ -e "${DISK_DIR}/mpmserver" ] && rm -rf "${DISK_DIR}/mpmserver"
+		mkdir "${DISK_DIR}/mpmserver"
+
+		# relink disk images
+		ln disks/library/cpm22-mpm20-1.dsk "${DISK_DIR}/mpmserver/drivea.dsk"
+		ln disks/library/cpm22-mpm20-2.dsk "${DISK_DIR}/mpmserver/driveb.dsk"
+	
+		# make sure we have no left-over configs
+		[ -e "${CONF_DIR}/net_server.conf" ] && rm "${CONF_DIR}/net_server.conf" > /dev/null
+		[ -e "${CONF_DIR}/net_client.conf" ] && rm "${CONF_DIR}/net_client.conf" > /dev/null
+
+		# write server config file
+cat > "${CONF_DIR}/net_server.conf" << EOF1
+# Console	telnet flag	TCP/IP port
+1		0		4001
+2		0		4002
+3		0		4003
+4		0		4004
+EOF1
+
+		# start simulator
+		./cpmsim -d "${DISK_DIR}/mpmserver" $*
+
+		echo CP/M simulator exited.
+		echo Press ^+C to exit, or wait 5 seconds to reload.
+		sleep 5
+	done
+
+	exit
+}
+
+
+start_client() {
+	[ "$1" == "" ] && { echo "Syntax Error: Client Num #1-4 must be provided on command line"; exit; }
+	CLIENT_NO=$1
+
+	# remove our files on TERM and EXIT signals
+	trap 'echo cleaning up ...; rm -rvf ${DISK_DIR}/cpnetclient${CLIENT_NO} ; rm ${CONF_DIR}/net_client.conf; exit' TERM EXIT 
+
+	while [ : ]; do
+		# cleanup vm path
+		[ -e "${DISK_DIR}/cpnetclient${CLIENT_NO}" ] && rm -rf "${DISK_DIR}/cpnetclient${CLIENT_NO}"
+		mkdir "${DISK_DIR}/cpnetclient${CLIENT_NO}"
+
+		# relink disk images
+		ln disks/library/cpm22-cpnet12-client${CLIENT_NO}.dsk "${DISK_DIR}/cpnetclient${CLIENT_NO}/drivea.dsk"
+
+		# make sure we have no left-over configs
+		[ -e "${CONF_DIR}/net_server.conf" ] && rm "${CONF_DIR}/net_server.conf" > /dev/null
+		[ -e "${CONF_DIR}/net_client.conf" ] && rm "${CONF_DIR}/net_client.conf" > /dev/null
+
+		# write client config file
+cat > "${CONF_DIR}/net_client.conf" << EOF2
+1		localhost		400${CLIENT_NO}
+EOF2
+
+		# start simulator
+		./cpmsim -d "${DISK_DIR}/cpnetclient${CLIENT_NO}" $*
+
+		echo CP/M simulator exited.
+		echo Press ^+C to exit, or wait 5 seconds to reload.
+		sleep 5
+	done
+	
+	exit
+}
+
+
+# check direct call to functions
+#
+[ "$1" == "start_server" ] && start_server
+[ "$1" == "start_client" ] && start_client $2
+
+
+# start server simulation
+echo Starting MP/M server ...
+tmux new-session -s CPNET -n "Server" -d -- $0 start_server
+# sleep to give the simulator time to settle
+sleep 1
+
+# start client simulation
+CLIENT=1
+while [ "$CLIENT" -le "$MAX_CLIENTS" ]; do
+	echo Starting CP/NET client $CLIENT ...
+	tmux neww -n "Client $CLIENT" -d -- $0 start_client $CLIENT
+	# sleep to give the simulator time to settle
+	sleep 1
+	CLIENT=`EXPR $CLIENT + 1`
+done
+
+echo ------------------------------
+echo Attaching to tmux in 5 seconds.
+echo Press ^B+W for window list
+echo ^B+0-${MAX_CLIENTS} or ^B+N or ^B+P to cycle windows
+echo
+echo To exit simulation, type BYE into each CP/M simulator,
+echo then press ^+C within 5 seconds to break the auto-restart. 
+echo ------------------------------
+sleep 5
+
+tmux attach
+
+echo ------------------------------
+echo Simulation ended.
+echo ------------------------------
