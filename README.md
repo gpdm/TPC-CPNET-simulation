@@ -117,13 +117,13 @@ References are provided in the [CP/NET patches](patches/cpnet) directory.
 
 # References
 
-[z80pack sources](https://github.com/udo-munk/z80pack)
-[z80pack](https://www.icl1900.co.uk/unix4fun/z80pack)
-[An Analysis of CP/NET](https://dl.acm.org/doi/pdf/10.1145/800219.806658)
-[MP/M Users Guide](http://www.cpm.z80.de/manuals/mpm2ug.pdf)
-[MP/M Implementors Guide](https://bitsavers.trailing-edge.com/pdf/digitalResearch/mpm_II/MPM_II_System_Implementors_Guide_Aug82.pdf)
-[CP/NET manual: Overview](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#Fig1_1)
-[CP/NET manual: Notes about Mail](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#Sec2_10)
-[CP/NET manual: NETWRKIF.ASM original source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#ListE_2)
-[CP/NET manual: SNIOS source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#SecE_4)
-[Unofficial CP/M website, source[(http://www.retroarchive.org/cpm/archive/unofficial/source.html)
+- [z80pack sources](https://github.com/udo-munk/z80pack)
+- [z80pack](https://www.icl1900.co.uk/unix4fun/z80pack)
+- [An Analysis of CP/NET](https://dl.acm.org/doi/pdf/10.1145/800219.806658)
+- [MP/M Users Guide](http://www.cpm.z80.de/manuals/mpm2ug.pdf)
+- [MP/M Implementors Guide](https://bitsavers.trailing-edge.com/pdf/digitalResearch/mpm_II/MPM_II_System_Implementors_Guide_Aug82.pdf)
+- [CP/NET manual: Overview](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#Fig1_1)
+- [CP/NET manual: Notes about Mail](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#Sec2_10)
+- [CP/NET manual: NETWRKIF.ASM original source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#ListE_2)
+- [CP/NET manual: SNIOS source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#SecE_4)
+- [Unofficial CP/M website, source[(http://www.retroarchive.org/cpm/archive/unofficial/source.html)
