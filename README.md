@@ -1,6 +1,6 @@
 # CP/NET & MP/M Client-Server simulation
 
-This is Following my research documented in my video
+This is following my research documented in my video
 on [MP/M & CP/NET Networking Uncovered](https://www.youtube.com/watch?v=YI2rXPHUQ9c).
 
 I wanted to get into CP/NET and MP/M networking,
@@ -18,12 +18,12 @@ as it needs some alterations, furtherly explained below.
 But let's start first with what's contained in this repository:
 
 - 1 set of MP/M 2.0 boot disks
- - sourced from [z80pack](https://www.icl1900.co.uk/unix4fun/z80pack/#download)
- - was recompiled using SYSGEN to have only 1 (instead of 3) TMPs
- - includes a patched and recompiled NETWRKIF.RSP to support 4 network connections
+  - sourced from [z80pack](https://www.icl1900.co.uk/unix4fun/z80pack/#download)
+  - was recompiled using SYSGEN to have only 1 (instead of 3) TMPs
+  - includes a patched and recompiled NETWRKIF.RSP to support 4 network connections
 - 4 sets of CP/M 2.2 + CP/NET 1.2 boot disks
- - sourced from [z80pack](https://www.icl1900.co.uk/unix4fun/z80pack/#download)
- - includes a patched and recompiled SNIOS.RSP with a Unique Network Requestor ID per each disk
+  - sourced from [z80pack](https://www.icl1900.co.uk/unix4fun/z80pack/#download)
+  - includes a patched and recompiled SNIOS.RSP with a Unique Network Requestor ID per each disk
 - The [cpnet](./cpnet) startup script, to run the simulation
 
 
