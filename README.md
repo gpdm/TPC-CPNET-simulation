@@ -180,4 +180,4 @@ References are provided in the [CP/NET patches](patches/cpnet) directory.
 - [CP/NET manual: Notes about Mail](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#Sec2_10)
 - [CP/NET manual: NETWRKIF.ASM original source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#ListE_2)
 - [CP/NET manual: SNIOS source](http://sebhc.durgadas.com/CPNET-docs/cpnet.html#SecE_4)
-- [Unofficial CP/M website, source[(http://www.retroarchive.org/cpm/archive/unofficial/source.html)
+- [Unofficial CP/M website, source](http://www.retroarchive.org/cpm/archive/unofficial/source.html)
