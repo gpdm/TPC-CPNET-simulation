@@ -74,11 +74,65 @@ using the usual `tmux` hotkeys, i.e.
 - ^B-N (next)
 - ^B-P (previous)
 - `B+(0-4) for the indivual consoles
+ - console 0 is the MP/M server
+ - consoles 1-4 are the CP/NET clients 1-4
 
 To exit from the simulation, simply type `bye` into each console window,
 then press `^-C` to exit.
 
 Note: If you don't press `^-C` the simulation on that console will restart.
+
+
+# Setting it into Motion
+
+All simulations will boot directly into CP/M, however they will not yet
+startup MP/M or CP/NET automatically.
+
+I read how this can be patched for automatic startup, but it's currently *not* implemented yet.
+
+So you need some manual steps to set it in motion.
+
+
+## MP/M Server
+
+This is only quick and dirty, for all details, please refer to the MP/M manual.
+
+1. start MP/M by running `mpmldr`
+2. That's it. You can get some stats using the `mpmstats` command
+
+
+## CP/NET Clients
+
+Again, refer to the CP/NET manual for all the details.
+
+1. start CP/NET by running `cpnetldr`
+2. run `login` (no passwords required)
+3. map the network drives from the server to the client:
+
+   ```
+   network C:=A:
+   network D:=B:
+
+4. Stats command is `cpnetsts`
+
+Want to send mail?
+
+Check the `cpnetsts` command. It provides the requester ID,
+which is `11h` for the first client, `12h` for the second,
+`13h` for the third, and `14h` for the fourth.
+
+Run mail like this:
+
+```
+D:
+mail
+```
+
+When asked for a recipient, use one of the requester IDs named above.
+There's no user accounts, or anything, so that's the only way to
+direct a mail message at a given client.
+
+That's it!
 
 
 # Behind the Scenes
